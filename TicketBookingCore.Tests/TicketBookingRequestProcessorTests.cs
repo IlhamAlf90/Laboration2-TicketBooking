@@ -1,12 +1,16 @@
 namespace TicketBookingCore.Tests
 {
     public class TicketBookingRequestProcessorTests
+
     {
+        private readonly Mock<ITicketBookingRepository> _ticketBookingRepositoryMock;
         private readonly TicketBookingRequestProcessor _processor;
         public TicketBookingRequestProcessorTests()
         {
+            _ticketBookingRepositoryMock = new Mock<ITicketBookingRepository>();
 
-            _processor = new TicketBookingRequestProcessor();
+            _processor = new TicketBookingRequestProcessor(_ticketBookingRepositoryMock.Object);
+        
         }
 
         [Fact]
