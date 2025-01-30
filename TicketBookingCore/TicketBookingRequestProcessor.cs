@@ -3,6 +3,8 @@ namespace TicketBookingCore
 {
     public class TicketBookingRequestProcessor
     {
+        private object _ticketBookingRepository;
+
         public TicketBookingRequestProcessor(ITicketBookingRepository 
             ticketBookingRepository)
         {
@@ -15,6 +17,8 @@ namespace TicketBookingCore
             {
                 throw new ArgumentNullException(nameof(request));
             }
+
+
             //refractor för att returnera en ny TicketBookingResponse
             return new TicketBookingResponse
             {

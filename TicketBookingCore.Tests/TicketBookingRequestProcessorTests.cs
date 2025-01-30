@@ -1,12 +1,14 @@
-using Moq;
 
-   namespace TicketBookingCore.Tests
+using Moq;
+using TicketBookingCore;
+
+namespace TicketBookingCore.Tests
     {
     public class TicketBookingRequestProcessorTests
 
     {
-        private readonly Mock<ITicketBookingRepository> 
-      _ticketBookingRepositoryMock;
+        
+        private readonly Mock<ITicketBookingRepository> _ticketBookingRepositoryMock;
 
         private readonly TicketBookingRequestProcessor _processor;
         public TicketBookingRequestProcessorTests()
@@ -54,12 +56,11 @@ using Moq;
 
             TicketBooking savedTicketBooking = null;
 
-               _ticketBookingRepositoryMock.Setup(x => x.Save(It.IsAny<TicketBooking>()))
-
-                .Callback<TicketBooking>((ticketBooking) =>
-                {
-                    savedTicketBooking = ticketBooking;
-                });
+            _ticketBookingRepositoryMock.Setup(x => x.Save(It.IsAny<TicketBooking>()))
+         .Callback<TicketBooking>((ticketBooking) =>
+         {
+             savedTicketBooking = ticketBooking;
+         });
 
             var request = new TicketBookingRequest
             {
