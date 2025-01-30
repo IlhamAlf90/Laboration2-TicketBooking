@@ -1,10 +1,13 @@
 using Moq;
-namespace TicketBookingCore.Tests
-{
+
+   namespace TicketBookingCore.Tests
+    {
     public class TicketBookingRequestProcessorTests
 
     {
-        private readonly Mock<ITicketBookingRepository> _ticketBookingRepositoryMock;
+        private readonly Mock<ITicketBookingRepository> 
+      _ticketBookingRepositoryMock;
+
         private readonly TicketBookingRequestProcessor _processor;
         public TicketBookingRequestProcessorTests()
         {
@@ -48,6 +51,16 @@ namespace TicketBookingCore.Tests
         public void ShouldSaveToDatabase()
         {
             // Arrange
+
+            TicketBooking savedTicketBooking = null;
+
+               _ticketBookingRepositoryMock.Setup(x => x.Save(It.IsAny<TicketBooking>()))
+
+                .Callback<TicketBooking>((ticketBooking) =>
+                {
+                    savedTicketBooking = ticketBooking;
+                });
+
             var request = new TicketBookingRequest
             {
                 FirstName = "Ilham",
@@ -59,6 +72,12 @@ namespace TicketBookingCore.Tests
             TicketBookingResponse response = _processor.Book(request);
 
             // Assert
+
+            Assert.NotNull(savedTicketBooking);
+            Assert.Equal(request.FirstName, savedTicketBooking.FirstName);
+            Assert.Equal(request.LastName, savedTicketBooking.LastName);
+            Assert.Equal(request.Email, savedTicketBooking.Email);
+
         }
     }
 }

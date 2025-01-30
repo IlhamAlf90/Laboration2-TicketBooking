@@ -1,6 +1,6 @@
 ﻿namespace TicketBookingCore
 {
-    public class TicketBooking
+    public class TicketBooking : TicketBookingBase
     {
     }
 }
