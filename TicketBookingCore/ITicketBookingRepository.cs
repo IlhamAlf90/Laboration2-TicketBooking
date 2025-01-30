@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TicketBookingCore
 {
-    internal interface ITicketBookingRepository
+    public interface ITicketBookingRepository
     {
         void Save(TicketBooking ticket);
     }

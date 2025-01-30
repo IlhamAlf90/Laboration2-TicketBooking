@@ -1,3 +1,4 @@
+using Moq;
 namespace TicketBookingCore.Tests
 {
     public class TicketBookingRequestProcessorTests
@@ -10,7 +11,7 @@ namespace TicketBookingCore.Tests
             _ticketBookingRepositoryMock = new Mock<ITicketBookingRepository>();
 
             _processor = new TicketBookingRequestProcessor(_ticketBookingRepositoryMock.Object);
-        
+
         }
 
         [Fact]
@@ -44,7 +45,8 @@ namespace TicketBookingCore.Tests
             Assert.Equal("request", exception.ParamName);
         }
         [Fact]
-        public void ShouldSaveToDatabase() {
+        public void ShouldSaveToDatabase()
+        {
             // Arrange
             var request = new TicketBookingRequest
             {
@@ -59,3 +61,4 @@ namespace TicketBookingCore.Tests
             // Assert
         }
     }
+}
