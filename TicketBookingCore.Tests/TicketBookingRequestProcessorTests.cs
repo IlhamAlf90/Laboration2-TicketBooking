@@ -5,6 +5,7 @@ namespace TicketBookingCore.Tests
         private readonly TicketBookingRequestProcessor _processor;
         public TicketBookingRequestProcessorTests()
         {
+
             _processor = new TicketBookingRequestProcessor();
         }
 
@@ -15,9 +16,9 @@ namespace TicketBookingCore.Tests
 
             var request = new TicketBookingRequest
             {
-                FirstName = "Nevena",
-                LastName = "Kicanovic",
-                Email = "nevena@gmail.com"
+                FirstName = "Ilham",
+                LastName = "Alfayyad",
+                Email = "ilham@gmail.com"
             };
 
             // Act
@@ -38,5 +39,19 @@ namespace TicketBookingCore.Tests
             //Assert
             Assert.Equal("request", exception.ParamName);
         }
+        [Fact]
+        public void ShouldSaveToDatabase() {
+            // Arrange
+            var request = new TicketBookingRequest
+            {
+                FirstName = "Ilham",
+                LastName = "Alfayyad",
+                Email = "ilham@gmail.com"
+            };
+
+            // Act
+            TicketBookingResponse response = _processor.Book(request);
+
+            // Assert
+        }
     }
-}
