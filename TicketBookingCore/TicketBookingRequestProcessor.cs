@@ -1,4 +1,6 @@
 ﻿
+using System.Runtime.InteropServices;
+
 namespace TicketBookingCore
 {
     public class TicketBookingRequestProcessor
@@ -20,20 +22,21 @@ namespace TicketBookingCore
                 throw new ArgumentNullException(nameof(request));
             }
 
-            _ticketBookingRepository.Save(new TicketBooking
+            _ticketBookingRepository.Save(Create<TicketBooking>(request));
+            return Create<TicketBookingResponse>(request);
+        }
+        
+        private static T Create<T>(TicketBookingRequest request) where T : 
+            
+            TicketBookingBase, new()
+        {
+            return new T
             {
                 FirstName = request.FirstName,
                 LastName = request.LastName,
-                Email = request.Email
-            });
-
-            //refractor för att returnera en ny TicketBookingResponse
-            return new TicketBookingResponse
-            {
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Email = request.Email
+                Email = request.Email,
             };
         }
+     
     }
 }

@@ -1,4 +1,5 @@
 
+
 using Moq;
 using TicketBookingCore;
 
@@ -7,12 +8,22 @@ namespace TicketBookingCore.Tests
     public class TicketBookingRequestProcessorTests
 
     {
-        
+       
+        private readonly TicketBookingRequest _request;
         private readonly Mock<ITicketBookingRepository> _ticketBookingRepositoryMock;
 
         private readonly TicketBookingRequestProcessor _processor;
+        
+
         public TicketBookingRequestProcessorTests()
         {
+
+            _request = new TicketBookingRequest
+            {
+                FirstName = "Ilham",
+                LastName = "Alfayyad",
+                Email = "ilham@gmail.com"
+            };
             _ticketBookingRepositoryMock = new Mock<ITicketBookingRepository>();
 
             _processor = new TicketBookingRequestProcessor(_ticketBookingRepositoryMock.Object);
@@ -49,6 +60,8 @@ namespace TicketBookingCore.Tests
             //Assert
             Assert.Equal("request", exception.ParamName);
         }
+
+      
         [Fact]
         public void ShouldSaveToDatabase()
         {
@@ -62,22 +75,20 @@ namespace TicketBookingCore.Tests
              savedTicketBooking = ticketBooking;
          });
 
-            var request = new TicketBookingRequest
-            {
-                FirstName = "Ilham",
-                LastName = "Alfayyad",
-                Email = "ilham@gmail.com"
-            };
+           
 
             // Act
-            TicketBookingResponse response = _processor.Book(request);
+            _processor.Book(_request);
 
             // Assert
+            /// Verify that the Save method was called only once
+
+            _ticketBookingRepositoryMock.Verify(x => x.Save(It.IsAny<TicketBooking>()), Times.Once);
 
             Assert.NotNull(savedTicketBooking);
-            Assert.Equal(request.FirstName, savedTicketBooking.FirstName);
-            Assert.Equal(request.LastName, savedTicketBooking.LastName);
-            Assert.Equal(request.Email, savedTicketBooking.Email);
+            Assert.Equal(_request.FirstName, savedTicketBooking.FirstName);
+            Assert.Equal(_request.LastName, savedTicketBooking.LastName);
+            Assert.Equal(_request.Email, savedTicketBooking.Email);
 
         }
     }
